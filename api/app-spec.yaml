@@ -17,7 +17,7 @@ services:
       - key: DATABASE_URL
         scope: RUN_AND_BUILD_TIME
         type: SECRET
-        value: "postgresql://postgres.raputvbregotuowerzet:Tv4CYRas318PK4M3@aws-1-us-west-1.pooler.supabase.com:6543/postgres"
+        value: "postgresql://postgres.raputvbregotuowerzet:Tv4CYRas318PK4M3@aws-1-us-west-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
       - key: DIRECT_URL
         scope: RUN_AND_BUILD_TIME
         type: SECRET

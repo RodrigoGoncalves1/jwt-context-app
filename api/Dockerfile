@@ -16,5 +16,5 @@ COPY . .
 RUN pnpm prisma generate
 EXPOSE 4000
 
-# Sync database schema and start server (non-interactive)
-CMD ["sh", "-c", "pnpm prisma db push --skip-generate --accept-data-loss || true && pnpm dev"]
+# Sync database schema using direct connection, then start server with pooled connection
+CMD ["sh", "-c", "DATABASE_URL=$DIRECT_URL pnpm prisma db push --skip-generate --accept-data-loss || true && pnpm dev"]

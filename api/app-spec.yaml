@@ -17,7 +17,11 @@ services:
       - key: DATABASE_URL
         scope: RUN_AND_BUILD_TIME
         type: SECRET
-        value: "${db.DATABASE_URL}"
+        value: "postgresql://postgres.raputvbregotuowerzet:Tv4CYRas318PK4M3@aws-0-us-west-1.pooler.supabase.com:6543/postgres"
+      - key: DIRECT_URL
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+        value: "postgresql://postgres:Tv4CYRas318PK4M3@db.raputvbregotuowerzet.supabase.co:5432/postgres"
       - key: JWT_ACCESS_SECRET
         scope: RUN_TIME
         type: SECRET
@@ -54,7 +58,3 @@ services:
       - key: SMTP_FROM
         scope: RUN_TIME
         value: "noreply@codrsync.dev"
-databases:
-  - name: db
-    engine: PG
-    production: false

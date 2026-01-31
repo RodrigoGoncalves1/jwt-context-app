@@ -16,5 +16,5 @@ COPY . .
 RUN pnpm prisma generate
 EXPOSE 4000
 
-# Run migrations and start server
-CMD ["sh", "-c", "pnpm prisma migrate deploy && pnpm dev"]
+# Sync database schema and start server
+CMD ["sh", "-c", "pnpm prisma db push --skip-generate && pnpm dev"]

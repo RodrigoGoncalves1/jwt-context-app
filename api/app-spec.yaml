@@ -21,11 +21,11 @@ services:
       - key: JWT_ACCESS_SECRET
         scope: RUN_TIME
         type: SECRET
-        value: "jwt-access-secret-change-in-prod-123"
+        value: "fMOVHCJP54SUO9QRsVF68mNH2m4DAL4vaR78uc5ew/kl1r30LZ4OTNUAiwTNKlYR"
       - key: JWT_REFRESH_SECRET
         scope: RUN_TIME
         type: SECRET
-        value: "jwt-refresh-secret-change-in-prod-456"
+        value: "vjyRFCEqP74OlO4UtShpZGjNabXPKkKTnrE1L45mWGGMwL+vE7fp0phoAKlbOcZx"
       - key: JWT_ACCESS_EXPIRES_IN
         scope: RUN_TIME
         value: "15m"
@@ -38,6 +38,22 @@ services:
       - key: API_PORT
         scope: RUN_TIME
         value: "4000"
+      - key: SMTP_HOST
+        scope: RUN_TIME
+        value: "smtp.resend.com"
+      - key: SMTP_PORT
+        scope: RUN_TIME
+        value: "587"
+      - key: SMTP_USER
+        scope: RUN_TIME
+        value: "resend"
+      - key: SMTP_PASS
+        scope: RUN_TIME
+        type: SECRET
+        value: "re_JeKxkxqg_PDFAZp1EgsviUjmCiERpp3J8"
+      - key: SMTP_FROM
+        scope: RUN_TIME
+        value: "noreply@codrsync.dev"
 databases:
   - name: db
     engine: PG

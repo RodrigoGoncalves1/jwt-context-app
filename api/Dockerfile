@@ -15,4 +15,6 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 RUN pnpm prisma generate
 EXPOSE 4000
-CMD ["pnpm", "dev"]
+
+# Run migrations and start server
+CMD ["sh", "-c", "pnpm prisma migrate deploy && pnpm dev"]

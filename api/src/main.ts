@@ -47,7 +47,10 @@ async function main() {
       })
 
       reply.status(response.status)
-      reply.send(response.body)
+
+      // Convert ReadableStream to text before sending
+      const body = await response.text()
+      reply.send(body)
     },
   })
 

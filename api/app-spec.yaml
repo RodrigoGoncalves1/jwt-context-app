@@ -1,0 +1,44 @@
+name: jwt-context-api
+region: nyc
+services:
+  - name: api
+    github:
+      repo: ciroarendt/jwt-context-app
+      branch: main
+      deploy_on_push: true
+    source_dir: /api
+    dockerfile_path: api/Dockerfile
+    http_port: 4000
+    instance_count: 1
+    instance_size_slug: apps-s-1vcpu-0.5gb
+    routes:
+      - path: /
+    envs:
+      - key: DATABASE_URL
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+        value: "${db.DATABASE_URL}"
+      - key: JWT_ACCESS_SECRET
+        scope: RUN_TIME
+        type: SECRET
+        value: "jwt-access-secret-change-in-prod-123"
+      - key: JWT_REFRESH_SECRET
+        scope: RUN_TIME
+        type: SECRET
+        value: "jwt-refresh-secret-change-in-prod-456"
+      - key: JWT_ACCESS_EXPIRES_IN
+        scope: RUN_TIME
+        value: "15m"
+      - key: JWT_REFRESH_EXPIRES_IN
+        scope: RUN_TIME
+        value: "7d"
+      - key: APP_URL
+        scope: RUN_TIME
+        value: "https://jwt-context-web.vercel.app"
+      - key: API_PORT
+        scope: RUN_TIME
+        value: "4000"
+databases:
+  - name: db
+    engine: PG
+    production: false

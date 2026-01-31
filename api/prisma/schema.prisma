@@ -1,11 +1,13 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
+  schemas   = ["jwt_auth"]
 }
 
 model User {
@@ -22,6 +24,7 @@ model User {
   passwordResets     PasswordReset[]
 
   @@map("users")
+  @@schema("jwt_auth")
 }
 
 model RefreshToken {
@@ -36,6 +39,7 @@ model RefreshToken {
   @@index([userId])
   @@index([token])
   @@map("refresh_tokens")
+  @@schema("jwt_auth")
 }
 
 model VerificationToken {
@@ -49,6 +53,7 @@ model VerificationToken {
 
   @@index([token])
   @@map("verification_tokens")
+  @@schema("jwt_auth")
 }
 
 model PasswordReset {
@@ -62,4 +67,5 @@ model PasswordReset {
 
   @@index([token])
   @@map("password_resets")
+  @@schema("jwt_auth")
 }

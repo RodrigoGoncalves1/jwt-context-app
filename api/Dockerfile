@@ -1,5 +1,10 @@
-FROM node:20-alpine AS base
+FROM node:20-slim AS base
 WORKDIR /app
+
+# Install OpenSSL for Prisma
+RUN apt-get update && apt-get install -y openssl ca-certificates && rm -rf /var/lib/apt/lists/*
+
+# Enable pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
 # Production - using tsx to run TypeScript directly

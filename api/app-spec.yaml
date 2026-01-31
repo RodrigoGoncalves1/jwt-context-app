@@ -38,7 +38,7 @@ services:
         value: "7d"
       - key: APP_URL
         scope: RUN_TIME
-        value: "https://jwt-context-web.vercel.app"
+        value: "https://auth.codrsync.dev"
       - key: API_PORT
         scope: RUN_TIME
         value: "4000"

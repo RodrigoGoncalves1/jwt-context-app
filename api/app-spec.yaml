@@ -1,0 +1,60 @@
+name: jwt-context-api
+region: nyc
+services:
+  - name: api
+    github:
+      repo: ciroarendt/jwt-context-app
+      branch: main
+      deploy_on_push: true
+    source_dir: /api
+    dockerfile_path: api/Dockerfile
+    http_port: 4000
+    instance_count: 1
+    instance_size_slug: apps-s-1vcpu-0.5gb
+    routes:
+      - path: /
+    envs:
+      - key: DATABASE_URL
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+        value: "postgresql://postgres.raputvbregotuowerzet:Tv4CYRas318PK4M3@aws-1-us-west-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
+      - key: DIRECT_URL
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+        value: "postgresql://postgres:Tv4CYRas318PK4M3@db.raputvbregotuowerzet.supabase.co:5432/postgres"
+      - key: JWT_ACCESS_SECRET
+        scope: RUN_TIME
+        type: SECRET
+        value: "fMOVHCJP54SUO9QRsVF68mNH2m4DAL4vaR78uc5ew/kl1r30LZ4OTNUAiwTNKlYR"
+      - key: JWT_REFRESH_SECRET
+        scope: RUN_TIME
+        type: SECRET
+        value: "vjyRFCEqP74OlO4UtShpZGjNabXPKkKTnrE1L45mWGGMwL+vE7fp0phoAKlbOcZx"
+      - key: JWT_ACCESS_EXPIRES_IN
+        scope: RUN_TIME
+        value: "15m"
+      - key: JWT_REFRESH_EXPIRES_IN
+        scope: RUN_TIME
+        value: "7d"
+      - key: APP_URL
+        scope: RUN_TIME
+        value: "https://auth.codrsync.dev"
+      - key: API_PORT
+        scope: RUN_TIME
+        value: "4000"
+      - key: SMTP_HOST
+        scope: RUN_TIME
+        value: "smtp.resend.com"
+      - key: SMTP_PORT
+        scope: RUN_TIME
+        value: "587"
+      - key: SMTP_USER
+        scope: RUN_TIME
+        value: "resend"
+      - key: SMTP_PASS
+        scope: RUN_TIME
+        type: SECRET
+        value: "re_JeKxkxqg_PDFAZp1EgsviUjmCiERpp3J8"
+      - key: SMTP_FROM
+        scope: RUN_TIME
+        value: "noreply@codrsync.dev"

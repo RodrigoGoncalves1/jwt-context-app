@@ -11,7 +11,7 @@ async function main() {
 
   // CORS
   await app.register(cors, {
-    origin: [config.appUrl, 'http://localhost:5173'],
+    origin: [config.appUrl, 'https://jwt-context-web.vercel.app', 'http://localhost:5173'],
     credentials: true,
   })
 
@@ -47,7 +47,10 @@ async function main() {
       })
 
       reply.status(response.status)
-      reply.send(response.body)
+
+      // Convert ReadableStream to text before sending
+      const body = await response.text()
+      reply.send(body)
     },
   })
 

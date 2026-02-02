@@ -1,31 +1,20 @@
-FROM node:20-alpine AS base
+FROM node:20-slim AS base
 WORKDIR /app
+
+# Install OpenSSL for Prisma
+RUN apt-get update && apt-get install -y openssl ca-certificates && rm -rf /var/lib/apt/lists/*
+
+# Enable pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Development
-FROM base AS development
-COPY package.json pnpm-lock.yaml* ./
-RUN pnpm install
-COPY . .
-RUN pnpm prisma generate
-EXPOSE 4000
-CMD ["pnpm", "dev"]
-
-# Build
-FROM base AS build
+# Production - using tsx to run TypeScript directly
+FROM base AS production
+ENV NODE_ENV=production
 COPY package.json pnpm-lock.yaml* ./
 RUN pnpm install --frozen-lockfile
 COPY . .
 RUN pnpm prisma generate
-RUN pnpm build
-
-# Production
-FROM base AS production
-ENV NODE_ENV=production
-COPY package.json pnpm-lock.yaml* ./
-RUN pnpm install --frozen-lockfile --prod
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/prisma ./prisma
-COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
 EXPOSE 4000
-CMD ["pnpm", "start"]
+
+# Sync database schema using direct connection, then start server with pooled connection
+CMD ["sh", "-c", "DATABASE_URL=$DIRECT_URL pnpm prisma db push --skip-generate --accept-data-loss || true && pnpm dev"]
